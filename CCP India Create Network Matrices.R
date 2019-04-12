@@ -23,7 +23,7 @@ dat_women$network_size <- network_size
 
 dat_women <- dat_women[!dat_women$network_size == 0,]
 
-#x <- dat_women[1,]
+# x <- dat_women[1,]
 
 make_base_mat <- function(x){
   ##########
@@ -98,7 +98,7 @@ for(i in 1:nrow(dat_women)){
 }
 
 
-x <- dat_women[15,]
+# x <- dat_women[15,]
 
 #Function which makes Social Network Image 
 make_image <- function(x) {
