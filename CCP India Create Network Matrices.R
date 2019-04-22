@@ -1,21 +1,36 @@
 # Empties Global Environment cache
 rm(list=ls())
 
-setwd("~/Desktop/India Clean Cooking Project")
+#Set working directory to current file location
+#To set to own working directory
+#  select "Session->Set Working Directory->To Source File Location"
+#  then copy result in console into current "setwd("")".
 
-
+#Importing packages. If not yet installed, packages can be installed by going to:
+#Tools -> Install Packages, then enter their exact names from within each 
+#library()
 library(tidyverse) # For data management
 library(igraph) # To transform and analyze network data
 library(ggnetwork) # To make good-looking network graphs
 library(scales) # To add percentages
 library(gridExtra) # For montage of networks
 library(grid) # For montage of networks
-
+#Although not supposed to load here, the functions below auto-loads the 
+#following. If not already, make sure to install these packages as well.
+#  egonet
+#  sna
+#  statnet.common
+#  network
+setwd("~/Desktop/India Clean Cooking Project")
+#Imports data and assigns it to variable "dataset", make all strings into
+#  non-factors to preserve names.
 dat_women <- read.csv("SNA data_women.csv", stringsAsFactors = FALSE)
 
+#Selecting the names of the alters, and changing all blank entries into NA's
 name_select <- dat_women %>% select(snaw_g7_name1:snaw_g7_name20)
 name_select[name_select == ""] <- NA
 
+#Calculating the network size by counting how many values are not NA's (aka, have names)
 sum(!is.na(name_select[1,]))
 
 network_size <- apply(name_select, 1, function(x){return(sum(!is.na(x)))})
@@ -92,10 +107,10 @@ make_base_mat <- function(x){
   return(mat)
 }
 
-for(i in 1:nrow(dat_women)){
-  print(i)
-  print(make_base_mat(dat_women[i,]))
-}
+# for(i in 1:nrow(dat_women)){
+#   print(i)
+#   print(make_base_mat(dat_women[i,]))
+# }
 
 
 # x <- dat_women[15,]
