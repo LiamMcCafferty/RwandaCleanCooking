@@ -192,6 +192,13 @@ matrix_list <- vector("list", nrow(dat_women))
 #  as the row the network matrix was created from.
 for(i in 1:nrow(dat_women)){
   matrix_list[[i]] <- make_base_mat(dat_women[i,])
+  names(matrix_list)[i] <- dat_women$snaw_redcap_id[i]
 }
 
+#Quick plan for adding network details to graphs: we already assign colors based
+#  upon if the node is the "ego" or not using the variable "ego_col". We can
+#  simply use this to assign colors that we want to each value. I would also
+#  assume that we can change the shape of each node as well to match, in case we
+#  want to double up.
 
+save(matrix_list, file = "matrix_list_women.rda")

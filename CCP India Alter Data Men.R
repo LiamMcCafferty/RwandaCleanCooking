@@ -29,10 +29,13 @@ library(tidyverse)
 
 #Read in data
 #Imports data and assigns it to variable "sample_data"
-sample_data <- read.csv("SNA data_women.csv", 
+sample_data <- read.csv("SNA data_men.csv", 
                         stringsAsFactors = FALSE)
 #Stores "sample_data" as a table data frame for easier reading
 sample_data <- tbl_df(sample_data)
+
+#Fixing men having "_m" at the end of every variable
+colnames(sample_data) <- sub("_m$", "", colnames(sample_data))
 
 #Creating the name_# keep/remove variables
 alter_keeps <- sample_data %>% select(snaw_redcap_id, snaw_g7_name1:snaw_g7_name20)
@@ -142,7 +145,7 @@ alter_frame$age <- unlist(by(alter_frame, alter_id_factor,
 ############################ Adding Education Highest #########################
 
 alter_frame$education <- unlist(by(alter_frame, alter_id_factor,
-                             info_finder, suffix = "13"))
+                                   info_finder, suffix = "13"))
 
 alter_frame$education <- factor(alter_frame$education, levels = c(1,2,3,4,5,6,9))
 levels(alter_frame$education) <- c("none", "up to class 4", "class 5 to class 8",
@@ -160,7 +163,7 @@ levels(alter_frame$shg) <- c("Yes","No")
 ############################ Adding Relationships #############################
 
 alter_frame$relationship <- unlist(by(alter_frame, alter_id_factor,
-                             info_finder, suffix = "15"))
+                                      info_finder, suffix = "15"))
 
 alter_frame$relationship <- factor(alter_frame$relationship, levels = c(1,2,3,4,5,6,7,8,9,10,11,99))
 levels(alter_frame$relationship) <- c("Spouse", "Parent", "Sibling", "Child",
@@ -170,7 +173,7 @@ levels(alter_frame$relationship) <- c("Spouse", "Parent", "Sibling", "Child",
 ############################ Adding LPG Connection ############################
 
 alter_frame$lpg <- unlist(by(alter_frame, alter_id_factor,
-                                      info_finder, suffix = "16"))
+                             info_finder, suffix = "16"))
 
 alter_frame$lpg <- factor(alter_frame$lpg, levels = c(1,2,9))
 levels(alter_frame$lpg) <- c("yes", "no", "Don't know")
@@ -178,7 +181,7 @@ levels(alter_frame$lpg) <- c("yes", "no", "Don't know")
 ############################ Adding LPG Connection Number #####################
 
 alter_frame$lpg_num <- unlist(by(alter_frame, alter_id_factor,
-                             info_finder, suffix = "17"))
+                                 info_finder, suffix = "17"))
 
 alter_frame$lpg_num <- factor(alter_frame$lpg_num, levels = c(1,2,3,4,5,6,7,10,9))
 levels(alter_frame$lpg_num) <- c("1", "2", "3", "4", "5", "6", "More than 6", "10", "Don't know")
@@ -186,7 +189,7 @@ levels(alter_frame$lpg_num) <- c("1", "2", "3", "4", "5", "6", "More than 6", "1
 ############################ Adding Stacking LPG ##############################
 
 alter_frame$stacking <- unlist(by(alter_frame, alter_id_factor,
-                                 info_finder, suffix = "18"))
+                                  info_finder, suffix = "18"))
 
 alter_frame$stacking <- factor(alter_frame$stacking, levels = c(1,2,3,9))
 levels(alter_frame$stacking) <- c("only LPG", "Both LPG and other stoves", "Does not own LPG", "don't know")
@@ -194,7 +197,7 @@ levels(alter_frame$stacking) <- c("only LPG", "Both LPG and other stoves", "Does
 ############################ Average Income per Month ##############################
 
 alter_frame$income <- unlist(by(alter_frame, alter_id_factor,
-                                  info_finder, suffix = "19"))
+                                info_finder, suffix = "19"))
 
 alter_frame$income <- factor(alter_frame$income, levels = c(1,2,3,4,5,9))
 levels(alter_frame$income) <- c("Less than 500", "Equal to or more than 500 less than 20000", "Equal to or more than 200 less than 5000", "Equal to or more than 5000 less than 10000", "Equal to or more than 10000", "Don't know")
@@ -202,7 +205,7 @@ levels(alter_frame$income) <- c("Less than 500", "Equal to or more than 500 less
 ############################ Marital Status ##############################
 
 alter_frame$marital_status <- unlist(by(alter_frame, alter_id_factor,
-                                  info_finder, suffix = "20"))
+                                        info_finder, suffix = "20"))
 
 alter_frame$marital_status <- factor(alter_frame$marital_status, levels = c(1,2,3,4,9))
 levels(alter_frame$marital_status) <- c("Married", "Unmarried", "Widow", "Divorced", "Don't know")
@@ -218,7 +221,7 @@ levels(alter_frame$fequency) <- c("Daily", "Weekly", "Monthly", "Less often", "D
 ############################ Caste ##############################
 
 alter_frame$caste <- unlist(by(alter_frame, alter_id_factor,
-                                  info_finder, suffix = "22"))
+                               info_finder, suffix = "22"))
 
 alter_frame$caste <- factor(alter_frame$caste, levels = c(1,2,3,4,5,9))
 levels(alter_frame$caste) <- c("General", "SC/ST", "OBC", "other religious minorities", "Others", "Don't know")
@@ -226,12 +229,12 @@ levels(alter_frame$caste) <- c("General", "SC/ST", "OBC", "other religious minor
 ############################ Number of Family Members ##############################
 
 alter_frame$family_count <- unlist(by(alter_frame, alter_id_factor,
-                               info_finder, suffix = "23"))
+                                      info_finder, suffix = "23"))
 
 ############################ Occupation ##############################
 
 alter_frame$occupation <- unlist(by(alter_frame, alter_id_factor,
-                               info_finder, suffix = "24"))
+                                    info_finder, suffix = "24"))
 
 alter_frame$occupation <- factor(alter_frame$occupation, levels = c(1,2,3,4,5,6,9))
 levels(alter_frame$occupation) <- c("home maker", "self-employed: farm", "self-employed: non-farm", "agricultural labor", "non-agricultural labor", "other", "Don't know")
@@ -239,7 +242,7 @@ levels(alter_frame$occupation) <- c("home maker", "self-employed: farm", "self-e
 ############################ Group activity ##############################
 
 alter_frame$group_activity <- unlist(by(alter_frame, alter_id_factor,
-                                    info_finder, suffix = "25"))
+                                        info_finder, suffix = "25"))
 
 alter_frame$group_activity <- factor(alter_frame$group_activity, levels = c(1,0))
 levels(alter_frame$group_activity) <- c("Yes", "No")
@@ -247,7 +250,7 @@ levels(alter_frame$group_activity) <- c("Yes", "No")
 ############################ Distance of Residence ##############################
 
 alter_frame$distance_residence <- unlist(by(alter_frame, alter_id_factor,
-                                        info_finder, suffix = "26"))
+                                            info_finder, suffix = "26"))
 
 alter_frame$distance_residence <- factor(alter_frame$distance_residence, levels = c(1,2,3,4,5,9))
 levels(alter_frame$distance_residence) <- c("Same house", "Less than 5 km", "Equal to or more than 5 km less than 10 km", "Equal to or more than 10 km less than 20 km", "Equal to or more than 20 km", "Don't know")
@@ -257,5 +260,5 @@ levels(alter_frame$distance_residence) <- c("Same house", "Less than 5 km", "Equ
 # sample_data %>% subset(snaw_redcap_id == 215) %>% select(snaw_g26_name1:snaw_g26_name20) %>% as.data.frame()
 
 #Exporting data
-save(alter_frame, file = "alter_data.rda")
-write.csv(alter_frame, file = "alter_data.csv")
+save(alter_frame, file = "alter_data_men.rda")
+write.csv(alter_frame, file = "alter_data_men.csv")
