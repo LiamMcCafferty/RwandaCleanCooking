@@ -20,7 +20,7 @@ rm(list = ls())
 #To set to own working directory
 #  select "Session->Set Working Directory->To Source File Location"
 #  then copy result in console into current "setwd("")".
-setwd("~/Desktop/India Clean Cooking Project")
+setwd("~/Dropbox (Partners HealthCare)/BWH Backup - Liam/India Clean Cooking Project")
 
 #Importing packages. If not yet installed, packages can be installed by going to:
 #  Tools -> Install Packages, then enter their exact names from within each
