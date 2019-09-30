@@ -31,15 +31,20 @@ ego_data_add$caste_of_the_respondent <-
 				 levels = c(1,3,2,4,5,9),
 				 label = c("General", "SC/ST", "OBC", "other religious minorities", "Others", "Don't know"))
 
+ego_data_add$a28_self_help_group <-
+	factor(ego_data_add$a28_self_help_group,
+				 levels = c(1, 0),
+				 labels = c("Yes", "No"))
+
 
 ego_data_add$record_id %in% sample_data$snaw_redcap_id
 sample_data$snaw_redcap_id %in% ego_data_add$record_id
 
 sample_data <- left_join(sample_data,
 												 select(ego_data_add, "snaw_redcap_id" = "record_id",
-												 			 "household_group", "caste_of_the_respondent"),
+												 			 "household_group", "caste_of_the_respondent",
+												 			 "self_help_group" = "a28_self_help_group"),
 												 by = "snaw_redcap_id")
-
 
 
 #Making all "Don't know's" under lpg into NA's
@@ -155,7 +160,7 @@ make_base_mat <- function(x){
 sample_data$alter_count <- NA
 
 for(i in 1:nrow(sample_data)){
-	sample_data$alter_count[i] <- make_base_mat(sample_data[i,]) %>% nrow()
+	sample_data$alter_count[i] <- make_base_mat(sample_data[i,]) %>% "["(-1,-1) %>% nrow()
 }
 
 save(sample_data, file = "women_ego_alter_data.rda")
